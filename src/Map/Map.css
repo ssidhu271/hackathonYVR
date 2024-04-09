@@ -1,0 +1,13 @@
+.hidden {
+    display: none !important; /* Using !important to ensure it overrides any other display styles */
+  }
+
+.interactive-map#Layer_1 #BlueTestArea,
+.interactive-map#Layer_1 #YellowTestArea {
+  display: block;
+}
+
+.interactive-map.hide-areas#Layer_1 #BlueTestArea,
+.interactive-map.hide-areas#Layer_1 #YellowTestArea {
+  display: none;
+}
