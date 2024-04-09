@@ -6,6 +6,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `python detect.py --weights yolov5s.pt --source 0;2C`
+
+This script is used to run object detection on a given source using the YOLOv5 model.
+
+### `python APIEndpoint.py`
+
+This script is used to start a Python API endpoint.
+
 ### `npm start`
 
 Runs the app in the development mode.\
