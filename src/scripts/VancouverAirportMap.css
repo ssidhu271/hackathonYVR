@@ -17,6 +17,8 @@
 }
 
 .mapContainer {
+justify-content: left!important;
   border-radius: 45px;
   /* overflow: hidden;  */
+  
 }
