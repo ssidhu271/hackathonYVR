@@ -1,0 +1,2 @@
+camera1: {'person': 1, 'suitcase': 0}
+camera2: {'person': 0, 'suitcase': 0}
