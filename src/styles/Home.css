@@ -6,10 +6,16 @@
     padding: 20px;
     border-radius: 45px;
     border: 2px solid black;
-    margin: 50px; /* Your desired margin */
+    margin: 50px; 
     overflow-y: hidden;
-    position: relative; /* Make sure container is relative for absolute positioning inside */
+    position: relative; 
 
-    box-sizing: border-box; /* Make sure padding and border are included in the element's total width and height */
+    box-sizing: border-box; 
+  }
+  
+
+  .leaflet-container {
+    border-radius: 45px !important;
+    overflow: hidden; 
   }
   

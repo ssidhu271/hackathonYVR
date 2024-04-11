@@ -59,6 +59,14 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import cameraIconUrl from "../images/camera.webp";
 import "./VancouverAirportMap.css";
+import IssueTypesPieChart from '../components/PieChart'; 
+import BarChart from '../components/BarChart'; 
+
+const issueData = {
+  labels: ['Unattended Baggage', 'Waste and Clutter', 'Cleanliness'],
+  values: [300, 150, 100], // hard coded, replace with actual data
+};
+
 
 const VancouverAirportMap = () => {
   const position = [49.1947, -123.1788];
@@ -113,7 +121,7 @@ const VancouverAirportMap = () => {
 
   const cameraIcon = L.icon({
     iconUrl: cameraIconUrl,
-    iconSize: [25, 25],
+    iconSize: [20, 20],
     iconAnchor: [12.5, 25],
     popupAnchor: [0, -25],
   });
@@ -162,7 +170,6 @@ const VancouverAirportMap = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      // The marker generation logic remains the same...
       const newMarker = {
         id: Date.now(),
         position: [49.195, -123.177],
@@ -176,7 +183,6 @@ const VancouverAirportMap = () => {
     return () => clearInterval(intervalId);
   }, [addMarker]);
 
-  // Calculate total people count
   const totalPeople = markers.reduce(
     (acc, marker) => acc + marker.peopleCount,
     0
@@ -214,11 +220,28 @@ const VancouverAirportMap = () => {
           </React.Fragment>
         ))}
       </MapContainer>
-      {totalPeople > overcrowdingThreshold && (
+
+
+
+      {/* CHARTS AND GRAPHS START */}
+      <div className="chartsWrapper">
+  <div className="chartContainer">
+    <IssueTypesPieChart issueData={issueData} />
+  </div>
+  <div className="barChartContainer">
+    <BarChart markers={markers} />
+  </div>
+</div>
+
+
+      {/* CHARTS AND GRAPHS END */}
+
+
+      {/* {totalPeople > overcrowdingThreshold && (
         <div className="overcrowdingAlert">
           Attention: High traffic detected! Current count: {totalPeople}
         </div>
-      )}
+      )} */}
     </>
   );
 };
