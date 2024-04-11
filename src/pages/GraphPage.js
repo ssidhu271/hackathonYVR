@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
-// Import Chart.js components
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +12,6 @@ import {
   Legend,
 } from 'chart.js';
 
-// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -27,6 +25,40 @@ ChartJS.register(
 const GraphPage = () => {
   const [data, setData] = useState([]);
 
+  const options = {
+    scales: {
+      x: {
+        ticks: {
+          color: '#ffffff', 
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)', 
+        },
+      },
+      y: {
+        ticks: {
+          color: '#ffffff', 
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)', 
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: '#ffffff', 
+        },
+      },
+      tooltip: {
+        titleColor: '#ffffff', 
+        bodyColor: '#ffffff',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)', 
+      },
+    },
+  };
+  
+
   const fetchData = async () => {
     const response = await axios.get('http://localhost:3001/counts');
     setData(response.data);
@@ -34,9 +66,9 @@ const GraphPage = () => {
 
   useEffect(() => {
     fetchData();
-    const intervalId = setInterval(fetchData, 15 * 60 * 1000); // Fetch data every 15 minutes
+    const intervalId = setInterval(fetchData, 15 * 60 * 1000); 
 
-    return () => clearInterval(intervalId); // Clear interval on component unmount
+    return () => clearInterval(intervalId); 
   }, []);
 
   const chartData = {
@@ -46,13 +78,18 @@ const GraphPage = () => {
         label: 'People Count',
         data: data.map((item) => item.peopleCount),
         fill: false,
-        backgroundColor: 'rgb(75, 192, 192)',
-        borderColor: 'rgba(75, 192, 192, 0.2)',
+        backgroundColor: '#ffffff', 
+        borderColor: '#4BC0C0', 
+        pointBackgroundColor: '#ffffff', 
+        pointBorderColor: '#4BC0C0', 
+        borderWidth: 2, 
       },
     ],
   };
+  
 
-  return <Line data={chartData} />;
+  return <Line data={chartData} options={options} />;
+
 };
 
 export default GraphPage;

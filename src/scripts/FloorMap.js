@@ -57,7 +57,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import cameraIconUrl from "../images/camera.webp";
+import cameraIconUrl from "../images/circle.png";
 import "./VancouverAirportMap.css";
 import IssueTypesPieChart from '../components/PieChart'; 
 import BarChart from '../components/BarChart'; 
