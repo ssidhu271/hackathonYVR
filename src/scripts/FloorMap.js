@@ -53,101 +53,141 @@
 
 // export default FloorMap;
 
-
-
-import React, { useState, useEffect, useCallback } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-import cameraIconUrl from '../images/camera.webp';
-import './VancouverAirportMap.css';
+import React, { useState, useEffect, useCallback } from "react";
+import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import cameraIconUrl from "../images/camera.webp";
+import "./VancouverAirportMap.css";
 
 const VancouverAirportMap = () => {
   const position = [49.1947, -123.1788];
+  const [fetchedData, setFetchedData] = useState(null);
 
   const bounds = [
-    [49.1867, -123.1938], 
-    [49.2027, -123.1638]  
+    [49.1867, -123.1938],
+    [49.2027, -123.1638],
   ];
 
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/get_counts")
+      .then((response) => response.json())
+      .then((data) => setFetchedData(data));
+    console.log(fetchedData);
+  }, []);
 
-  const markers = [
-    { id: 1, position: [49.1948, -123.1750], info: 'Marker 1 Info', peopleCount: 20 },
-    { id: 2, position: [49.1946, -123.1750], info: 'Marker 2 Info', peopleCount: 100 },
-  ];
+  useEffect(() => {
+    if (fetchedData) {
+      setMarkers((prevMarkers) => [
+        ...prevMarkers,
+        {
+          id: fetchedData.camera1.person,
+          position: [49.1951, -123.1776],
+          info: "Camera 1 from backend",
+          peopleCount: fetchedData.camera1.person,
+        },
+        {
+          id: fetchedData.camera2.person,
+          position: [49.194, -123.176],
+          info: "Camera 2 from backend",
+          peopleCount: fetchedData.camera2.person,
+        },
+      ]);
+    }
+  }, [fetchedData]);
+
+  const [markers, setMarkers] = useState([
+    {
+      id: 1,
+      position: [49.1948, -123.175],
+      info: "Marker 1 Info",
+      peopleCount: 20,
+    },
+    {
+      id: 2,
+      position: [49.1946, -123.175],
+      info: "Marker 2 Info",
+      peopleCount: 100,
+    },
+  ]);
 
   const cameraIcon = L.icon({
     iconUrl: cameraIconUrl,
-    iconSize: [25, 25], 
-    iconAnchor: [12.5, 25], 
-    popupAnchor: [0, -25], 
+    iconSize: [25, 25],
+    iconAnchor: [12.5, 25],
+    popupAnchor: [0, -25],
   });
 
-  const overcrowdingThreshold = 200; 
+  const overcrowdingThreshold = 200;
 
-    // Function to dynamically modify markers (add, update, remove)
+  // Function to dynamically modify markers (add, update, remove)
   // Add a new marker
   const addMarker = useCallback((newMarker, duration = 5000) => {
-    setMarkers(currentMarkers => [...currentMarkers, newMarker]);
-  
+    setMarkers((currentMarkers) => [...currentMarkers, newMarker]);
+
     // New: Send the peopleCount to the backend
-    fetch('http://localhost:3001/add', {
-      method: 'POST',
+    fetch("http://localhost:3001/add", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ peopleCount: newMarker.peopleCount }),
     })
-    .then(response => response.json())
-    .then(data => console.log('Success:', data))
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  
+      .then((response) => response.json())
+      .then((data) => console.log("Success:", data))
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
     setTimeout(() => {
-      setMarkers(currentMarkers => currentMarkers.filter(marker => marker.id !== newMarker.id));
+      setMarkers((currentMarkers) =>
+        currentMarkers.filter((marker) => marker.id !== newMarker.id)
+      );
     }, duration);
   }, []);
 
   // Remove a marker by id
   const removeMarker = (id) => {
-    setMarkers(currentMarkers => currentMarkers.filter(marker => marker.id !== id));
+    setMarkers((currentMarkers) =>
+      currentMarkers.filter((marker) => marker.id !== id)
+    );
   };
 
+  // determine circle color based on peopleCount
+  const getCircleColor = (peopleCount) => {
+    if (peopleCount <= 50) return "green";
+    else if (peopleCount <= 100) return "yellow";
+    else return "red";
+  };
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // The marker generation logic remains the same...
+      const newMarker = {
+        id: Date.now(),
+        position: [49.195, -123.177],
+        info: "Dynamic Issue Detected",
+        peopleCount: Math.floor(Math.random() * 100),
+      };
 
-    // determine circle color based on peopleCount
-    const getCircleColor = (peopleCount) => {
-      if (peopleCount <= 50) return 'green';
-      else if (peopleCount <= 100) return 'yellow';
-      else return 'red';
-    };
+      addMarker(newMarker, 10000);
+    }, 15000);
 
-    useEffect(() => {
-      const intervalId = setInterval(() => {
-        // The marker generation logic remains the same...
-        const newMarker = {
-          id: Date.now(),
-          position: [49.195, -123.177],
-          info: 'Dynamic Issue Detected',
-          peopleCount: Math.floor(Math.random() * 100),
-        };
-  
-        addMarker(newMarker, 10000);
-      }, 15000);
-  
-      return () => clearInterval(intervalId);
-    }, [addMarker]);
+    return () => clearInterval(intervalId);
+  }, [addMarker]);
 
-    // Calculate total people count
-  const totalPeople = markers.reduce((acc, marker) => acc + marker.peopleCount, 0);
+  // Calculate total people count
+  const totalPeople = markers.reduce(
+    (acc, marker) => acc + marker.peopleCount,
+    0
+  );
 
   return (
     <>
       <MapContainer
         center={position}
         zoom={16}
-        style={{ height: '400px', width: '100%' }}
+        style={{ height: "400px", width: "100%" }}
         minZoom={16}
         maxBounds={bounds}
         maxBoundsViscosity={1.0}
@@ -156,11 +196,12 @@ const VancouverAirportMap = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {markers.map(marker => (
+        {markers.map((marker) => (
           <React.Fragment key={marker.id}>
             <Marker position={marker.position} icon={cameraIcon}>
-              <Popup>{marker.info} <br /> 
-              People Count: {marker.peopleCount}
+              <Popup>
+                {marker.info} <br />
+                People Count: {marker.peopleCount}
               </Popup>
             </Marker>
             <Circle
@@ -168,7 +209,7 @@ const VancouverAirportMap = () => {
               color={getCircleColor(marker.peopleCount)}
               fillColor={getCircleColor(marker.peopleCount)}
               fillOpacity={0.5}
-              radius={50} 
+              radius={50}
             />
           </React.Fragment>
         ))}
