@@ -71,10 +71,10 @@ const VancouverAirportMap = () => {
   ];
 
 
-  const [markers, setMarkers] = useState([
-    // { id: 1, position: [49.1951, -123.1776], info: 'Marker 1 Info', peopleCount: 20 },
-    // { id: 2, position: [49.1940, -123.1760], info: 'Marker 2 Info', peopleCount: 100 },
-  ]);
+  const markers = [
+    { id: 1, position: [49.1948, -123.1750], info: 'Marker 1 Info', peopleCount: 20 },
+    { id: 2, position: [49.1946, -123.1750], info: 'Marker 2 Info', peopleCount: 100 },
+  ];
 
   const cameraIcon = L.icon({
     iconUrl: cameraIconUrl,
