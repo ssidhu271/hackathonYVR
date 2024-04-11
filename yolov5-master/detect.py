@@ -34,6 +34,7 @@ import os
 import platform
 import sys
 from pathlib import Path
+import APIEndpoint
 
 import torch
 
@@ -65,35 +66,12 @@ from utils.general import (
 )
 from utils.torch_utils import select_device, smart_inference_mode
 
-stream_counts = {
-    'camera1': {'person': 0, 'suitcase': 0},
-    'camera2': {'person': 0, 'suitcase': 0}
-}
-
-def save_counts_to_file(counts, filename):
-    """
-    Save the object counts to a text file in a structured format.
-    
-    :param counts: A dictionary where keys are stream IDs and values are dictionaries of counts.
-    :param filename: The name of the file to save the counts.
-    """
-    
-    with open(filename, 'w') as file:
-        for stream_id, objects_count in counts.items():
-            file.write(f"{stream_id}: {objects_count}\n")
-            
-def count_objects(detections, names, object_type):
-    """
-    Count the occurrences of a specific object type in detections for a single frame.
-    """
-    return sum(1 for *_, cls in detections if names[int(cls)] == object_type)
 
 @smart_inference_mode()
 def run(
     weights=ROOT / "yolov5s.pt",  # model path or triton URL
     source=ROOT / "data/images",  # file/dir/URL/glob/screen/0(webcam)
     data=ROOT / "data/coco128.yaml",  # dataset.yaml path
-    stream_id='stream1',
     imgsz=(640, 640),  # inference size (height, width)
     conf_thres=0.25,  # confidence threshold
     iou_thres=0.45,  # NMS IOU threshold
@@ -120,7 +98,6 @@ def run(
     dnn=False,  # use OpenCV DNN for ONNX inference
     vid_stride=1,  # video frame-rate stride
 ):
-    
     source = str(source)
     save_img = not nosave and not source.endswith(".txt")  # save inference images
     is_file = Path(source).suffix[1:] in (IMG_FORMATS + VID_FORMATS)
@@ -155,12 +132,7 @@ def run(
     # Run inference
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(device=device), Profile(device=device), Profile(device=device))
-    
-    
-    # save_counts_to_file(stream_counts, 'stream_counts.txt')
-    
     for path, im, im0s, vid_cap, s in dataset:
-        
         with dt[0]:
             im = torch.from_numpy(im).to(model.device)
             im = im.half() if model.fp16 else im.float()  # uint8 to fp16/32
@@ -202,8 +174,6 @@ def run(
                 if not csv_path.is_file():
                     writer.writeheader()
                 writer.writerow(data)
-                
-      
 
         # Process predictions
         for i, det in enumerate(pred):  # per image
@@ -216,7 +186,7 @@ def run(
 
             annotator = Annotator(im0, line_width=line_thickness, example=str(names))  # define annotator here
 
-            
+
             p = Path(p)  # to Path
             save_path = str(save_dir / p.name)  # im.jpg
             txt_path = str(save_dir / "labels" / p.stem) + ("" if dataset.mode == "image" else f"_{frame}")  # im.txt
@@ -257,35 +227,17 @@ def run(
                         save_one_box(xyxy, imc, file=save_dir / "crops" / names[c] / f"{p.stem}.jpg", BGR=True)
 
 
-            if stream_id not in stream_counts:
-                stream_counts[stream_id] = {'person': 0, 'suitcase': 0}
-                        
-            # Calculate the counts for this frame
-            num_persons = count_objects(det, names, 'person')
-            num_suitcases = count_objects(det, names, 'suitcase')
-            
-            stream_counts[stream_id]['person'] = num_persons
-            stream_counts[stream_id]['suitcase'] = num_suitcases
-            #  # Example usage within your loop
-            # count_objects(det, names, 'person', stream_id)
-            # count_objects(det, names, 'suitcase', stream_id)
-
-            # # Changes
-            # # Count the number of persons
-            # num_persons = count_objects(det, names, 'person')
-            # # Add the count of persons to the image
+            # Changes
+            # Count the number of persons
+            num_persons = count_persons(det, names)
+            # Add the count of persons to the image
             annotator.text((10, 60), f"Persons: {num_persons}")
-
-            # # Count the number of suitcases
-            # num_suitcases = count_objects(det, names, 'suitcase')
-            # # Add the count of suitcases to the image
-            annotator.text((10, 80), f"Suitcases: {num_suitcases}")
 
             # Stream results
             im0 = annotator.result()
 
             # Resize image for stream
-            max_width = 1080
+            max_width = 640
             aspect_ratio = im0.shape[1] / im0.shape[0]
             new_width = min(max_width, im0.shape[1])
             new_height = int(new_width / aspect_ratio)
@@ -317,20 +269,9 @@ def run(
                         save_path = str(Path(save_path).with_suffix(".mp4"))  # force *.mp4 suffix on results videos
                         vid_writer[i] = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*"mp4v"), fps, (w, h))
                     vid_writer[i].write(im0)
-            
-            save_counts_to_file(stream_counts, 'stream_counts.txt')
-
-            # counts_filename = os.path.join(save_dir, f"{stream_id}_counts.txt")
-            # save_counts_to_file({stream_id: stream_counts[stream_id]}, counts_filename)
-            
-            # counts_path = save_dir / f"{stream_id}_counts.txt"
-            # with counts_path.open('w') as f:
-            #     f.write(f"Persons: {num_persons}\n")
-            #     f.write(f"Suitcases: {num_suitcases}\n")
 
         # Print time (inference-only)
         LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
-       
 
     # Print results
     t = tuple(x.t / seen * 1e3 for x in dt)  # speeds per image
@@ -347,10 +288,6 @@ def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument("--weights", nargs="+", type=str, default=ROOT / "yolov5s.pt", help="model path or triton URL")
     parser.add_argument("--source", type=str, default=ROOT / "data/images", help="file/dir/URL/glob/screen/0(webcam)")
-    
-    # Multiple sources
-    parser.add_argument('--stream_id', type=str, default='stream1', help='stream id')
-    
     parser.add_argument("--data", type=str, default=ROOT / "data/coco128.yaml", help="(optional) dataset.yaml path")
     parser.add_argument("--imgsz", "--img", "--img-size", nargs="+", type=int, default=[640], help="inference size h,w")
     parser.add_argument("--conf-thres", type=float, default=0.25, help="confidence threshold")
@@ -383,33 +320,22 @@ def parse_opt():
     return opt
 
 
-# def count_persons(detections, names):
-#     global num_persons
-#     count = 0
-#     for *xyxy, conf, cls in detections:
-#         if names[int(cls)] == 'person':
-#             count += 1
-#     num_persons = count
-#     APIEndpoint.num_persons = count
+num_persons = 0
 
-#     # Assuming num_persons is calculated
-#     with open("num_persons.txt", "w") as f:
-#         f.write(str(num_persons))
-#     return count
 
-# def count_suitcases(detections, names):
-#     global num_suitcases
-#     count = 0
-#     for *xyxy, conf, cls in detections:
-#         if names[int(cls)] == 'suitcase':
-#             count += 1
-#     num_suitcases = count
-#     APIEndpoint.num_suitcases = count
+def count_persons(detections, names):
+    global num_persons
+    count = 0
+    for *xyxy, conf, cls in detections:
+        if names[int(cls)] == 'person':
+            count += 1
+    num_persons = count
+    APIEndpoint.num_persons = count
 
-#     # Assuming num_suitcases is calculated
-#     with open("num_suitcases.txt", "w") as f:
-#         f.write(str(num_suitcases))
-#     return count
+    # Assuming num_persons is calculated
+    with open("num_persons.txt", "w") as f:
+        f.write(str(num_persons))
+    return count
 
 
 def main(opt):

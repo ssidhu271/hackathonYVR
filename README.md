@@ -6,10 +6,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `python detect.py --weights yolov5s.pt --source 0 --stream_id camera1 & python detect.py --weights yolov5s.pt --source rtsp://service:Bcit2024.@142.232.233.219/rtsp_tunnel --stream_id camera2`
-
-This script is used to run object detection on web cam and IP camera concurrently
-
 ### `python detect.py --weights yolov5s.pt --source 0;2C`
 
 This script is used to run object detection on a given source using the YOLOv5 model.
