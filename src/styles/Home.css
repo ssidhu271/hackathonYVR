@@ -1,12 +1,12 @@
 .home-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left !important;
+    align-items: left !important;
     max-height: 90;    
-    padding: 20px;
+    padding: 5px;
     border-radius: 45px;
     border: 2px solid black;
-    margin: 50px; 
+    margin: 10px; 
     overflow-y: hidden;
     position: relative; 
 
@@ -15,7 +15,9 @@
   
 
   .leaflet-container {
-    border-radius: 45px !important;
+    border-radius: 5px !important;
     overflow: hidden; 
+    justify-content: left !important;
+    align-items: left !important;
   }
   
