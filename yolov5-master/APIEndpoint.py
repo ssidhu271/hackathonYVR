@@ -1,22 +1,15 @@
 from flask import Flask, jsonify
-from flask_cors import CORS
+import detect
 
 # Create a Flask app instance
 app = Flask(__name__)
-
-# Create a Flask app instance
-app = Flask(__name__)
-CORS(app)
 
 # Define a route that will return the num_persons variable
-@app.route('/get_counts', methods=['GET'])
-def get_counts():
-    counts = {}
-    with open("stream_counts.txt", "r") as f:
-        for line in f:
-            stream_id, objects_count_str = line.strip().split(': ', 1)
-            counts[stream_id] = eval(objects_count_str)
-    return jsonify(counts)
+@app.route('/get_num_persons', methods=['GET'])
+def get_num_persons():
+    with open("num_persons.txt", "r") as f:
+        num_persons = f.read()
+    return jsonify({'num_persons': num_persons})
 
 
 # Run the Flask app
