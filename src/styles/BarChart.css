@@ -1,0 +1,15 @@
+
+
+.barChartContainer {
+  padding: 20px;
+  background-color: #333;
+  border-radius: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: calc(50% - 10px); 
+  margin: 10px 0;
+  box-sizing: border-box;
+}
+
+.chartContainer .chart, .barChartContainer .chart {
+  height: 100%; 
+}

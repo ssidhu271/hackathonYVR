@@ -1,4 +1,3 @@
-// Home.jsx
 import React from 'react';
 import FloorMap from '../scripts/FloorMap'; 
 import '../styles/Home.css'; 

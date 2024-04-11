@@ -8,5 +8,15 @@
     text-align: center;
     padding: 10px;
     font-size: 20px;
-    z-index: 1000; /* Ensure it's above other elements */
+    z-index: 1000; 
   }
+
+.leaflet-container {
+  border-radius: 45px !important; 
+  /* overflow: hidden;  */
+}
+
+.mapContainer {
+  border-radius: 45px;
+  /* overflow: hidden;  */
+}
