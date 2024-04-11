@@ -55,11 +55,12 @@
 
 
 
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import cameraIconUrl from '../images/camera.webp';
+import './VancouverAirportMap.css';
 
 const VancouverAirportMap = () => {
   const position = [49.1947, -123.1788];
@@ -70,10 +71,10 @@ const VancouverAirportMap = () => {
   ];
 
 
-  const markers = [
-    { id: 1, position: [49.1951, -123.1776], info: 'Marker 1 Info', peopleCount: 20 },
-    { id: 2, position: [49.1940, -123.1760], info: 'Marker 2 Info', peopleCount: 100 },
-  ];
+  const [markers, setMarkers] = useState([
+    // { id: 1, position: [49.1951, -123.1776], info: 'Marker 1 Info', peopleCount: 20 },
+    // { id: 2, position: [49.1940, -123.1760], info: 'Marker 2 Info', peopleCount: 100 },
+  ]);
 
   const cameraIcon = L.icon({
     iconUrl: cameraIconUrl,
@@ -81,6 +82,38 @@ const VancouverAirportMap = () => {
     iconAnchor: [12.5, 25], 
     popupAnchor: [0, -25], 
   });
+
+  const overcrowdingThreshold = 200; 
+
+    // Function to dynamically modify markers (add, update, remove)
+  // Add a new marker
+  const addMarker = useCallback((newMarker, duration = 5000) => {
+    setMarkers(currentMarkers => [...currentMarkers, newMarker]);
+  
+    // New: Send the peopleCount to the backend
+    fetch('http://localhost:3001/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ peopleCount: newMarker.peopleCount }),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  
+    setTimeout(() => {
+      setMarkers(currentMarkers => currentMarkers.filter(marker => marker.id !== newMarker.id));
+    }, duration);
+  }, []);
+
+  // Remove a marker by id
+  const removeMarker = (id) => {
+    setMarkers(currentMarkers => currentMarkers.filter(marker => marker.id !== id));
+  };
+
 
 
     // determine circle color based on peopleCount
@@ -90,7 +123,27 @@ const VancouverAirportMap = () => {
       else return 'red';
     };
 
-    return (
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        // The marker generation logic remains the same...
+        const newMarker = {
+          id: Date.now(),
+          position: [49.195, -123.177],
+          info: 'Dynamic Issue Detected',
+          peopleCount: Math.floor(Math.random() * 100),
+        };
+  
+        addMarker(newMarker, 10000);
+      }, 15000);
+  
+      return () => clearInterval(intervalId);
+    }, [addMarker]);
+
+    // Calculate total people count
+  const totalPeople = markers.reduce((acc, marker) => acc + marker.peopleCount, 0);
+
+  return (
+    <>
       <MapContainer
         center={position}
         zoom={16}
@@ -105,11 +158,10 @@ const VancouverAirportMap = () => {
         />
         {markers.map(marker => (
           <React.Fragment key={marker.id}>
-            <Marker 
-              position={marker.position} 
-              icon={cameraIcon}
-            >
-              <Popup>{marker.info}</Popup>
+            <Marker position={marker.position} icon={cameraIcon}>
+              <Popup>{marker.info} <br /> 
+              People Count: {marker.peopleCount}
+              </Popup>
             </Marker>
             <Circle
               center={marker.position}
@@ -121,6 +173,13 @@ const VancouverAirportMap = () => {
           </React.Fragment>
         ))}
       </MapContainer>
-    );
-  };
+      {totalPeople > overcrowdingThreshold && (
+        <div className="overcrowdingAlert">
+          Attention: High traffic detected! Current count: {totalPeople}
+        </div>
+      )}
+    </>
+  );
+};
+
 export default VancouverAirportMap;
