@@ -75,6 +75,7 @@ const VancouverAirportMap = () => {
   }, []);
 
   const markers = [
+
     {
       id: fetchedData ? fetchedData.camera1.person : 1,
       position: [49.1951, -123.1776],
@@ -87,6 +88,7 @@ const VancouverAirportMap = () => {
       info: "Marker 2 Info",
       peopleCount: fetchedData ? fetchedData.camera2.person : 100,
     },
+
   ];
 
   const cameraIcon = L.icon({
