@@ -62,10 +62,10 @@ import "./VancouverAirportMap.css";
 import IssueTypesPieChart from '../components/PieChart'; 
 import BarChart from '../components/BarChart'; 
 
-const issueData = {
-  labels: ['Unattended Baggage', 'Waste and Clutter', 'Cleanliness'],
-  values: [300, 150, 100], // hard coded, replace with actual data
-};
+// const issueData = {
+//   labels: ['Unattended Baggage', 'Waste and Clutter', 'Cleanliness'],
+//   values: [300, 150, 100], // hard coded, replace with actual data
+// };
 
 
 const VancouverAirportMap = () => {
@@ -226,7 +226,8 @@ const VancouverAirportMap = () => {
       {/* CHARTS AND GRAPHS START */}
       <div className="chartsWrapper">
   <div className="chartContainer">
-    <IssueTypesPieChart issueData={issueData} />
+    {/* <IssueTypesPieChart issueData={issueData} /> */}
+    <IssueTypesPieChart/>
   </div>
   <div className="barChartContainer">
     <BarChart markers={markers} />
