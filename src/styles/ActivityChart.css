@@ -1,14 +1,14 @@
 .activityChartContainer {
-    margin: 0.5%;
-    padding: 2%;
+    margin: 10px;
+    padding: 10px;
     border-radius: 8px;
-    background-color: #333;  
-    color: #fff; 
-    width: 100%; 
-    height: 500px;
+    background-color: #161524;  
+    color: #b89cf6; 
+    width: 733px; 
+    height: 290px;
   }
   
-  .activityChartContainer .chartjs-render-monitor {
+  .chartjs-render-monitor {
     width: 100% !important;
     height: 100% !important;
   }

@@ -196,8 +196,8 @@ const VancouverAirportMap = () => {
 
   // determine circle color based on peopleCount
   const getCircleColor = (peopleCount) => {
-    if (peopleCount <= 50) return "green";
-    else if (peopleCount <= 100) return "yellow";
+    if (peopleCount <= 50) return "yellow";
+    else if (peopleCount <= 100) return "orange";
     else return "red";
   };
 
@@ -270,20 +270,20 @@ const VancouverAirportMap = () => {
 
 
       {/* CHARTS AND GRAPHS START */}
-      <div className="chartsWrapper">
+      <div className="chartsWrapper" style={{width: 100 + '%', height: 100 + '%'}}>
   <div className="chartContainer">
     {/* <IssueTypesPieChart issueData={issueData} /> */}
     <IssueTypesPieChart/>
   </div>
-  <div className="barChartContainer">
+  <div className="predictedGraphContainer" style={{zIndex: '3'}}>
+    <PredictedGraph />
+  </div><div className="barChartContainer" style={{zIndex: '502'}}>
     <BarChart markers={markers} />
   </div>
-  <div className="predictedGraphContainer">
-    <PredictedGraph />
-  </div>
-  <div className="activityTypeContainer">
+  <div className="activityTypeContainer" style={{zIndex: '501'}}>
     <ActivityTypeChart />
   </div>
+  
 </div>
 
 

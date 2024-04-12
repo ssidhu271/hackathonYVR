@@ -1,11 +1,11 @@
 .chartContainer {
-    background-color: #333;
+    background-color: #161524;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 8px;
     width: 60%; 
     margin-top: 10px;
     max-width: 400px; 
-    height: 350px;
+    height: 300px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
@@ -22,7 +22,7 @@
   }
    
   
-  .barChartContainer {
+  /* .barChartContainer {
     padding: 10px;
     background-color: #333;
     border-radius: 8px;
@@ -30,9 +30,9 @@
     width: calc(50% - 10px); 
     margin: 10px 0;
     box-sizing: border-box;
-  }
+  } */
   
-  .chartContainer .chart, .barChartContainer .chart {
-    height: 100%; 
+  .chartContainer .chart, .chart {
+ height: 100%;
   }
   
