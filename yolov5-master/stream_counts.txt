@@ -1,2 +1,3 @@
 camera1: {'person': 51, 'suitcase': 0}
 camera2: {'person': 100, 'suitcase': 0}
+camera3: {'person': 17, 'suitcase': 14, 'unattended-baggage': 300, 'waste': 50, 'debris':50}
