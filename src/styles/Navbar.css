@@ -1,4 +1,4 @@
-.navbar {
+/* .navbar {
   height: 100vh; 
   width: 150px; 
   position: fixed; 
@@ -32,4 +32,139 @@
 
 .navbar li a:hover {
   color: #688fb1;
+} */
+
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); */
+
+
+body {
+  margin: 0; /* Remove default body margin */
+  padding: 0; /* Remove default body padding */
 }
+
+.navbar {
+  width: 60px; /* Adjust initial width */
+  /* height: 100vh; */
+  background-color: #333; /* Adjust background color as needed */
+  color: #fff; /* Adjust text color as needed */
+  transition: width 0.3s ease; /* Smooth transition when opening/closing */
+  overflow-x: hidden; /* Hide overflow content when closed */
+  z-index: 1;
+}
+
+.navbar.open {
+  width: 225px; /* Expanded width when open */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  min-height: 100vh; /* Ensure the navbar covers the entire viewport height */
+}
+
+.navbar.closed {
+  width: 70px; /* Collapsed width when closed */
+}
+
+.open-toggle-icon {
+  padding-top: 15px;
+  cursor: pointer;
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center; /* Center the toggle button horizontally */
+  align-items: center; /* Center the toggle button vertically */
+}
+
+.open-toggle-icon:hover {
+  color: #809fe3; 
+}
+
+.close-toggle-icon {
+  /* padding-top: 15px; */
+  padding-right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: right; /* Center the toggle button horizontally */
+  align-items: center; /* Center the toggle button vertically */
+
+}
+
+.close-toggle-icon:hover {
+  color: #809fe3; 
+}
+
+.closed-icon {
+  cursor: pointer;
+  font-size: 24px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center; /* Center the toggle button horizontally */
+  align-items: center; /* Center the toggle button vertically */
+}
+
+.sidebar-header {
+  display: flex; /* Use flexbox layout */
+  align-items: center; /* Center items vertically */
+}
+
+.sidebar-header .close-toggle-icon {
+  margin-left: auto; /* Push the close button to the right */
+  padding-top: 10px;
+}
+
+.sidebar-header h2 {
+  padding-left: 20px;
+}
+
+.open-sidebar-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 25px;
+}
+
+.open-sidebar-options li {
+  margin-bottom: 20px;
+  padding: 8px 12px;
+}
+
+.open-sidebar-options li:hover {
+  background-color: rgba(215, 195, 195, 0.1);
+  border-radius: 10px;
+}
+
+.toggle-button:hover {
+  color: #809fe3; /* Adjust hover color as needed */
+}
+
+.icon {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+/* Style for links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #809fe3; /* Adjust hover color as needed */
+}
+
