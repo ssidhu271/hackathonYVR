@@ -196,8 +196,8 @@ const VancouverAirportMap = () => {
 
   // determine circle color based on peopleCount
   const getCircleColor = (peopleCount) => {
-    if (peopleCount <= 50) return "yellow";
-    else if (peopleCount <= 100) return "orange";
+    if (peopleCount <= 5) return "yellow";
+    else if (peopleCount <= 10) return "orange";
     else return "red";
   };
 
