@@ -95,10 +95,10 @@ const fetchBathroomLocations = async () => {
 
 
 
-const issueData = {
-  labels: ['Unattended Baggage', 'Waste and Clutter', 'Cleanliness'],
-  values: [300, 150, 100], // hard coded, replace with actual data
-};
+// const issueData = {
+//   labels: ['Unattended Baggage', 'Waste and Clutter', 'Cleanliness'],
+//   values: [300, 150, 100], // hard coded, replace with actual data
+// };
 
 const VancouverAirportMap = () => {
   const position = [49.1947, -123.1788];
@@ -263,7 +263,8 @@ const VancouverAirportMap = () => {
       {/* CHARTS AND GRAPHS START */}
       <div className="chartsWrapper">
   <div className="chartContainer">
-    <IssueTypesPieChart issueData={issueData} />
+    {/* <IssueTypesPieChart issueData={issueData} /> */}
+    <IssueTypesPieChart/>
   </div>
   <div className="barChartContainer">
     <BarChart markers={markers} />
