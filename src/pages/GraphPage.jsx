@@ -25,6 +25,18 @@ ChartJS.register(
 const GraphPage = () => {
   const [data, setData] = useState([]);
 
+  const graphContainerStyle = {
+    marginLeft: '250px',
+    padding: '20px',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    borderRadius: '20px',
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+    maxWidth: 'calc(100% - 250px)', 
+    boxSizing: 'border-box',
+    width: '80%',
+    margin: '0 auto', 
+  };
+
   const options = {
     scales: {
       x: {
@@ -37,7 +49,7 @@ const GraphPage = () => {
       },
       y: {
         ticks: {
-          color: '#ffffff', 
+          color: '#ffffff',
         },
         grid: {
           color: 'rgba(255, 255, 255, 0.1)', 
@@ -52,11 +64,15 @@ const GraphPage = () => {
       },
       tooltip: {
         titleColor: '#ffffff', 
-        bodyColor: '#ffffff',
+        bodyColor: '#ffffff', 
         backgroundColor: 'rgba(0, 0, 0, 0.7)', 
       },
     },
+    
+    backgroundColor: 'rgba(0, 0, 0, 0.9)', 
+    maintainAspectRatio: false,
   };
+
   
 
   const fetchData = async () => {
@@ -88,8 +104,11 @@ const GraphPage = () => {
   };
   
 
-  return <Line data={chartData} options={options} />;
-
+  return (
+    <div style={graphContainerStyle}>
+      <Line data={chartData} options={options} />
+    </div>
+  );
 };
 
 export default GraphPage;
