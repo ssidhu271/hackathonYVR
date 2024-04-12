@@ -1,58 +1,24 @@
-/* .navbar {
-  height: 100vh; 
-  width: 150px; 
-  position: fixed; 
-  z-index: 1; 
-  top: 0; 
-  left: 0;
-  background-color: #413e3e; 
-  overflow-x: hidden; 
-  padding-top: 20px;
-}
-
-.navbar h2 {
-  color: white;
-  padding: 10px;
-}
-
-.navbar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.navbar li {
-  padding: 10px;
-  margin: 0 20px;
-}
-
-.navbar li a {
-  color: #d8d8d8; 
-  text-decoration: none; 
-}
-
-.navbar li a:hover {
-  color: #688fb1;
-} */
-
 .navbar {
-  width: 60px; /* Adjust initial width */
-  /* height: 100vh; */
-  background-color: #333; /* Adjust background color as needed */
-  color: #fff; /* Adjust text color as needed */
-  transition: width 0.3s ease; /* Smooth transition when opening/closing */
-  overflow-x: hidden; /* Hide overflow content when closed */
+  width: 60px; 
+  background-color: #333; 
+  color: #fff;
+  transition: width 0.3s ease; 
+  overflow-x: hidden; 
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .navbar.open {
-  width: 225px; /* Expanded width when open */
+  width: 225px;
   display: flex;
-  flex-direction: column; /* Stack children vertically */
-  min-height: 100vh; /* Ensure the navbar covers the entire viewport height */
+  flex-direction: column; 
+  min-height: 100vh; 
 }
 
 .navbar.closed {
-  width: 70px; /* Collapsed width when closed */
+  width: 70px;
 }
 
 .open-toggle-icon {
@@ -61,8 +27,8 @@
   font-size: 24px;
   margin-bottom: 10px;
   display: flex;
-  justify-content: center; /* Center the toggle button horizontally */
-  align-items: center; /* Center the toggle button vertically */
+  justify-content: center;
+  align-items: center;
 }
 
 .open-toggle-icon:hover {
@@ -70,14 +36,13 @@
 }
 
 .close-toggle-icon {
-  /* padding-top: 15px; */
   padding-right: 10px;
   cursor: pointer;
   font-size: 24px;
   margin-bottom: 10px;
   display: flex;
-  justify-content: right; /* Center the toggle button horizontally */
-  align-items: center; /* Center the toggle button vertically */
+  justify-content: right;
+  align-items: center;
 
 }
 
@@ -92,17 +57,17 @@
   padding-top: 5px;
   padding-bottom: 10px;
   display: flex;
-  justify-content: center; /* Center the toggle button horizontally */
-  align-items: center; /* Center the toggle button vertically */
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar-header {
-  display: flex; /* Use flexbox layout */
-  align-items: center; /* Center items vertically */
+  display: flex; 
+  align-items: center; 
 }
 
 .sidebar-header .close-toggle-icon {
-  margin-left: auto; /* Push the close button to the right */
+  margin-left: auto; 
   padding-top: 10px;
 }
 
@@ -128,7 +93,7 @@
 }
 
 .toggle-button:hover {
-  color: #809fe3; /* Adjust hover color as needed */
+  color: #809fe3; 
 }
 
 .icon {
@@ -157,6 +122,6 @@ a {
 }
 
 a:hover {
-  color: #809fe3; /* Adjust hover color as needed */
+  color: #809fe3;
 }
 
