@@ -1,25 +1,3 @@
-// import React from "react";
-// import "../styles/Navbar.css";
-// import { Link } from "react-router-dom";
-
-// const Navbar = () => {
-//   return (
-//     <div className="navbar">
-//       <h2>Sidebar Title</h2>
-//       <ul>
-//         <li>
-//           <Link to="/">Home</Link>
-//         </li>{" "}
-//         <li>
-//           <Link to="/graph">Graph</Link>
-//         </li>
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Navbar;
-
 import React, { useState } from "react";
 import "../styles/Navbar.css";
 import { Link } from "react-router-dom";
@@ -28,7 +6,7 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import APIService from '../services/APIservice.js'
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleNavbar = () => {
@@ -43,7 +21,7 @@ const Navbar = () => {
     const staffName = "Harrison d";
     const staffEmail = "harrisondijon@gmail.com";
     const messageType = "Maintenance Required";
-  
+
     try {
       const apiService = new APIService();
       const response = await apiService.sendNotification(staffName, staffEmail, location, messageType);
@@ -93,7 +71,7 @@ const Navbar = () => {
                 className="notification-link"
                 onClick={(e) => {
                   e.preventDefault();
-                  toggleDropdown(); 
+                  toggleDropdown();
                 }}
               >
                 <div className="icon">
@@ -114,7 +92,6 @@ const Navbar = () => {
       )}
       {!isOpen && (
         <div>
-          {/* Show map and graph icons when sidebar is closed */}
           <ul>
             <li>
               <Link to="/">
