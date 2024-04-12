@@ -61,20 +61,52 @@ import cameraIconUrl from "../images/circle.png";
 import "./VancouverAirportMap.css";
 import IssueTypesPieChart from '../components/PieChart'; 
 import BarChart from '../components/BarChart'; 
+import PredictedGraph from '../components/PredictedGraph';
+import ActivityTypeChart from "../components/ActivityTypeChart";
+import axios from 'axios';
+
+
+const fetchBathroomLocations = async () => {
+  const query = `
+    [out:json];
+    (
+      node["amenity"="toilet"](around:3000,49.1947,-123.1788);
+      way["amenity"="toilet"](around:3000,49.1947,-123.1788);
+      relation["amenity"="toilet"](around:3000,49.1947,-123.1788);
+    );
+    out center;
+  `;
+
+  const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
+  try {
+    const response = await axios.get(url);
+    return response.data.elements.map(el => ({
+      id: el.id,
+      position: [el.lat, el.lon],
+      info: 'Public Toilet'
+    }));
+  } catch (error) {
+    console.error('Failed to fetch bathroom locations:', error);
+  }
+};
+
+
+
+
+
 
 const issueData = {
   labels: ['Unattended Baggage', 'Waste and Clutter', 'Cleanliness'],
   values: [300, 150, 100], // hard coded, replace with actual data
 };
 
-
 const VancouverAirportMap = () => {
   const position = [49.1947, -123.1788];
   const [fetchedData, setFetchedData] = useState(null);
 
   const bounds = [
-    [49.1867, -123.1938],
-    [49.2027, -123.1638],
+    [49.1867, -123.1888],
+    [49.2027, -123.1588],
   ];
 
   useEffect(() => {
@@ -128,8 +160,7 @@ const VancouverAirportMap = () => {
 
   const overcrowdingThreshold = 200;
 
-  // Function to dynamically modify markers (add, update, remove)
-  // Add a new marker
+
   const addMarker = useCallback((newMarker, duration = 5000) => {
     setMarkers((currentMarkers) => [...currentMarkers, newMarker]);
 
@@ -188,6 +219,13 @@ const VancouverAirportMap = () => {
     0
   );
 
+
+  useEffect(() => {
+    fetchBathroomLocations().then(bathrooms => {
+      setMarkers(prevMarkers => [...prevMarkers, ...bathrooms]);
+    });
+  }, []);
+
   return (
     <>
       <MapContainer
@@ -200,7 +238,6 @@ const VancouverAirportMap = () => {
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {markers.map((marker) => (
           <React.Fragment key={marker.id}>
@@ -230,6 +267,12 @@ const VancouverAirportMap = () => {
   </div>
   <div className="barChartContainer">
     <BarChart markers={markers} />
+  </div>
+  <div className="predictedGraphContainer">
+    <PredictedGraph />
+  </div>
+  <div className="activityTypeContainer">
+    <ActivityTypeChart />
   </div>
 </div>
 
