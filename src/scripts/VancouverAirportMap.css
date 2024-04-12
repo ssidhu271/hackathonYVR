@@ -12,8 +12,8 @@
   }
 
 .leaflet-container {
-  /* border-radius: 45px !important;  */
-  /* overflow: hidden;  */
+   border-radius: 25px !important;  
+   overflow: hidden;  
 }
 
 .mapContainer {

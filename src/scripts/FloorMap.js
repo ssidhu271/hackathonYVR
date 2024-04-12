@@ -123,30 +123,30 @@ const VancouverAirportMap = () => {
         ...prevMarkers,
         {
           id: fetchedData.camera1.person,
-          position: [49.1951, -123.1776],
+          position: [49.1948, -123.175],
           info: "Camera 1 from backend",
           peopleCount: fetchedData.camera1.person,
         },
         {
+
           id: fetchedData.camera2.person,
-          position: [49.194, -123.176],
+          position: [49.1946, -123.175],
           info: "Camera 2 from backend",
           peopleCount: fetchedData.camera2.person,
         },
       ]);
     }
   }, [fetchedData]);
-
   const [markers, setMarkers] = useState([
     {
       id: 1,
-      position: [49.1948, -123.175],
+      position: [49.1951, -123.1776],
       info: "Marker 1 Info",
       peopleCount: 20,
     },
     {
       id: 2,
-      position: [49.1946, -123.175],
+      position: [49.194, -123.176],
       info: "Marker 2 Info",
       peopleCount: 100,
     },
@@ -196,8 +196,8 @@ const VancouverAirportMap = () => {
 
   // determine circle color based on peopleCount
   const getCircleColor = (peopleCount) => {
-    if (peopleCount <= 50) return "green";
-    else if (peopleCount <= 100) return "yellow";
+    if (peopleCount <= 50) return "yellow";
+    else if (peopleCount <= 100) return "orange";
     else return "red";
   };
 
@@ -270,20 +270,20 @@ const VancouverAirportMap = () => {
 
 
       {/* CHARTS AND GRAPHS START */}
-      <div className="chartsWrapper">
+      <div className="chartsWrapper" style={{width: 100 + '%', height: 100 + '%'}}>
   <div className="chartContainer">
     {/* <IssueTypesPieChart issueData={issueData} /> */}
     <IssueTypesPieChart/>
   </div>
-  <div className="barChartContainer">
+  <div className="predictedGraphContainer" style={{zIndex: '3'}}>
+    <PredictedGraph />
+  </div><div className="barChartContainer" style={{zIndex: '502'}}>
     <BarChart markers={markers} />
   </div>
-  <div className="predictedGraphContainer">
-    <PredictedGraph />
-  </div>
-  <div className="activityTypeContainer">
+  <div className="activityTypeContainer" style={{zIndex: '501'}}>
     <ActivityTypeChart />
   </div>
+  
 </div>
 
 

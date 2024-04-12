@@ -35,16 +35,16 @@ const IssueTypesPieChart = () => {
     datasets: [{
       data: issueData.values,
       backgroundColor: [
-        'rgba(255, 99, 132, 0.8)',
-        'rgba(54, 162, 235, 0.8)',
-        'rgba(255, 206, 86, 0.8)',
+        'rgba(60,179,133, 0.5)',
+        'rgba(54, 162, 235, 0.5)',
+        'rgba(255, 206, 86, 0.5)',
       ],
       borderColor: [
-        'rgba(255, 99, 132, 1)',
+        'rgba(60,179,133, 1)',
         'rgba(54, 162, 235, 1)',
         'rgba(255, 206, 86, 1)',
       ],
-      borderWidth: 1,
+      borderWidth: 2,
       cutout: '50%',
     }]
   };

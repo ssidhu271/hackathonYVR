@@ -30,7 +30,7 @@ const GraphPage = () => {
   const graphContainerStyle = {
     marginLeft: '250px',
     padding: '20px',
-    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    backgroundColor: '#161524',
     borderRadius: '20px',
     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
     maxWidth: 'calc(100% - 250px)', 

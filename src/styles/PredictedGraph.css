@@ -1,9 +1,14 @@
 .predictedGraphContainer {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    height: 100%;
-  }
+  margin-top: -200px;
+  margin-left: 255px;
+  padding: 5px;
+  /* border: 1px solid #ccc; */
+  border-radius: 8px;
+  background-color: #161524;  
+  color: #fff; 
+  width: 560px; 
+  height: 385px;
+  position: relative;
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+}
   

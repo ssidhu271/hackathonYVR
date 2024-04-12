@@ -35,7 +35,7 @@ const Navbar = () => {
     <div className={`navbar ${isOpen ? "open" : ""}`}>
       {isOpen && (
         <div className="sidebar-header">
-          <h2>Crow's Nest</h2>
+          <h2>Crow's Nest</h2><div style={{rgba:"194, 228, 255, 0.1"}}>v0.1</div>
           <span className="close-toggle-icon" onClick={toggleNavbar}>
             <IoIosArrowBack />
           </span>
@@ -77,12 +77,12 @@ const Navbar = () => {
                 <div className="icon">
                   <FaBell />
                 </div>
-                Notification Manager
+                Notif. Manager
               </a>
               {isDropdownOpen && (
                 <ul className="dropdown">
                   <li onClick={() => handleSelection("Gate 5")}>
-                    Harrison d (Facilities)
+                    Harrison D. (Facilities)
                   </li>
                 </ul>
               )}
@@ -91,7 +91,7 @@ const Navbar = () => {
         </div>
       )}
       {!isOpen && (
-        <div>
+        <div style={{backgroundColor: '#12111e'}}>
           <ul>
             <li>
               <Link to="/">
