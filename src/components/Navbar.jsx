@@ -1,33 +1,11 @@
-// import React from "react";
-// import "../styles/Navbar.css";
-// import { Link } from "react-router-dom";
-
-// const Navbar = () => {
-//   return (
-//     <div className="navbar">
-//       <h2>Sidebar Title</h2>
-//       <ul>
-//         <li>
-//           <Link to="/">Home</Link>
-//         </li>{" "}
-//         <li>
-//           <Link to="/graph">Graph</Link>
-//         </li>
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Navbar;
-
 import React, { useState } from "react";
 import "../styles/Navbar.css";
 import { Link } from "react-router-dom";
-import { FaMap, FaChartBar } from "react-icons/fa"; // Import icons from react-icons library
+import { FaMap, FaChartBar } from "react-icons/fa"; 
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -72,7 +50,6 @@ const Navbar = () => {
       )}
       {!isOpen && (
         <div>
-          {/* Show map and graph icons when sidebar is closed */}
           <ul>
             <li>
               <Link to="/">
