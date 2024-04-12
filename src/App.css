@@ -1,6 +1,8 @@
 .app {
   display: flex;
   background-color:rgb(0, 0, 28);
+  background-image: url(/src/images/yvr_bg_transp.png);
+  background-size: contain;
 }
 
 .mapContainer {

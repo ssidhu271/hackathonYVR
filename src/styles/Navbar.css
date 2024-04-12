@@ -81,11 +81,15 @@
   flex-direction: column;
   align-items: flex-start;
   padding-left: 25px;
+  background-color: #12111e;
+  
+  
 }
 
 .open-sidebar-options li {
   margin-bottom: 20px;
   padding: 8px 12px;
+  align-items: center;
 }
 
 .open-sidebar-options li:hover {
@@ -130,17 +134,20 @@ a:hover {
   margin-top: 10px; /* Adjust this value as needed to lower the dropdown */
   background-color: #333; /* Adjust to match the navbar if needed */
   /* Other styling properties for dropdown */
+  border-radius: 8px;
 }
 
 /* You might also want to style the <li> inside .dropdown to match the design */
 .dropdown li {
   padding: 8px 10px;
   color: white; /* or any other color you prefer */
+  border-radius: 8px;
 }
 
 /* Add styles for when hovering over dropdown items */
 .dropdown li:hover {
   background-color: #444; /* Slightly lighter than the navbar background */
+  color: rgb(171, 171, 171); /* or any other color you prefer */
   cursor: pointer;
 }
 

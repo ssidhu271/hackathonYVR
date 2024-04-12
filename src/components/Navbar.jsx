@@ -91,7 +91,7 @@ const Navbar = () => {
         </div>
       )}
       {!isOpen && (
-        <div>
+        <div style={{backgroundColor: '#12111e'}}>
           <ul>
             <li>
               <Link to="/">

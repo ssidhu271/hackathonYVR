@@ -12,7 +12,7 @@ const BarChart = ({ markers }) => {
       data: markers.map(marker => marker.peopleCount),
       backgroundColor: 'rgba(75, 192, 192, 0.6)', 
       borderColor: 'rgba(75, 192, 192, 1)',
-      borderWidth: 1
+      borderWidth: 2
     }]
   };
   

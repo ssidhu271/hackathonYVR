@@ -277,7 +277,7 @@ const VancouverAirportMap = () => {
   </div>
   <div className="predictedGraphContainer" style={{zIndex: '3'}}>
     <PredictedGraph />
-  </div><div className="barChartContainer" style={{zIndex: '502'}}>
+  </div><div className="barChartContainer" style={{zIndex: '502', width: 100 + '%'}}>
     <BarChart markers={markers} />
   </div>
   <div className="activityTypeContainer" style={{zIndex: '501'}}>
