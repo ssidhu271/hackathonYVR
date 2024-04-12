@@ -13,13 +13,22 @@ class NotificationManager:
         self.email_host_user = 'yvrstaffnotifications@gmail.com'
         self.email_host_password = os.getenv('EMAIL_HOST_PASSWORD')
 
-    def send_email(self, subject, message, recipient):
+    def send_email(self, name, subject, message, recipient):
         try:
+            subject_preface = ['DO NOT RESPOND: ', subject]
+            message_body = [
+                f"""Hello {name},
+                
+                There is cleaning required at <location>.
+                Please assess the area
+                """
+            ]
+
             email_msg = MIMEMultipart()
             email_msg['From'] = self.email_host_user
             email_msg['To'] = recipient
-            email_msg['Subject'] = subject
-            email_msg.attach(MIMEText(message, 'plain'))
+            email_msg['Subject'] = ''.join(subject_preface)
+            email_msg.attach(MIMEText(''.join(message_body), 'plain'))
 
             server = smtplib.SMTP(self.email_host, self.email_port)
             if self.email_use_tls:
@@ -30,6 +39,7 @@ class NotificationManager:
             return 'Email sent successfully!'
         except Exception as e:
             return f'Failed to send email: {str(e)}'
+
 
 def main():
     notif_manager = NotificationManager()
