@@ -25,6 +25,7 @@ import "../styles/Navbar.css";
 import { Link } from "react-router-dom";
 import { FaMap, FaChartBar, FaBell } from "react-icons/fa"; // Import icons from react-icons library
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import APIService from '../services/APIservice.js'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,9 +39,18 @@ const Navbar = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleSelection = (location) => {
-    //call API endpoint with selected location
-    console.log(`Location selected: ${location}`);
+  const handleSelection = async (location) => {
+    const staffName = "Harrison d";
+    const staffEmail = "harrisondijon@gmail.com";
+    const messageType = "Maintenance Required";
+  
+    try {
+      const apiService = new APIService();
+      const response = await apiService.sendNotification(staffName, staffEmail, location, messageType);
+      console.log(response.message);
+    } catch (error) {
+      console.error('Error sending notification:', error);
+    }
   };
 
   return (
@@ -93,7 +103,7 @@ const Navbar = () => {
               </a>
               {isDropdownOpen && (
                 <ul className="dropdown">
-                  <li onClick={() => handleSelection("Location 1")}>
+                  <li onClick={() => handleSelection("Gate 5")}>
                     Harrison d (Facilities)
                   </li>
                 </ul>

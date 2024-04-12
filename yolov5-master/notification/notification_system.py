@@ -13,13 +13,12 @@ class NotificationManager:
         self.email_host_user = 'yvrstaffnotifications@gmail.com'
         self.email_host_password = os.getenv('EMAIL_HOST_PASSWORD')
 
-    def send_email(self, name, subject, message, recipient):
+    def send_email(self, name, subject, message_type, location, recipient):
         try:
             subject_preface = ['DO NOT RESPOND: ', subject]
             message_body = [
                 f"""Hello {name},
-                
-                There is cleaning required at <location>.
+                There is {message_type} at {location}.\n
                 Please assess the area
                 """
             ]
@@ -39,27 +38,3 @@ class NotificationManager:
             return 'Email sent successfully!'
         except Exception as e:
             return f'Failed to send email: {str(e)}'
-
-
-def main():
-    notif_manager = NotificationManager()
-
-    location = None
-    subject = 'DO NOT RESPOND: Cleanup Needed'
-
-    body = """
-        Hello ____,
-        
-        There is cleaning required at <location>.
-        Please assess the area
-        """
-    recipient = "harrisondijon@gmail.com"
-
-    result = notif_manager.send_email(subject, body, recipient)
-    print(result)  # This will print out the result of the email sending attempt.
-    # print(notif_manager.email_host_password)
-    # print(os.environ)
-
-
-if __name__ == '__main__':
-    main()

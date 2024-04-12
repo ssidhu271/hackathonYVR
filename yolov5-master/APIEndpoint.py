@@ -19,36 +19,23 @@ def get_counts():
     return jsonify(counts)
 
 
-# For notifying staff
 email_notifier = NS.NotificationManager()
 
 
 @app.route('/send_notification', methods=['POST'])
 def send_notification():
     try:
-        """
+
         # For implementation
-        
         data = request.json
-        staff_name = data.get('staff_name')
+        staff = data.get('staff_name')
         staff_email = data.get('email_address')
-        # Depends on how location is determined in the map
-        # location = {
-        #     "latitude": data.get('latitude'),
-        #     "longitude": data.get('longitude')
-        # }
         location = data.get('location')
         message_type = data.get("message_type")
-        """
-
-        staff = "Harrison d"
-        staff_email = "harrisondijon@gmail.com"
-        message_type = "Cleanup"
-        location = "Gate 5"
 
         subject = f"Alert: {message_type}"
         message = f"An event of type '{message_type}' requires attention at location: {location}."
-        response_message = email_notifier.send_email(staff, subject, message, staff_email)
+        response_message = email_notifier.send_email(staff, subject, message, location, staff_email)
         return jsonify({'message': response_message}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
