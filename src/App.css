@@ -3,9 +3,9 @@
 }
 
 .mapContainer {
-  margin-left: 250px;
+  margin-left: 150px;
   height: 100vh;
-  width: 100%; 
+  width: 60%; 
 justify-content: left;
 }
 
