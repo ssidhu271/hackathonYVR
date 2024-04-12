@@ -34,14 +34,6 @@
   color: #688fb1;
 } */
 
-/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'); */
-
-
-body {
-  margin: 0; /* Remove default body margin */
-  padding: 0; /* Remove default body padding */
-}
-
 .navbar {
   width: 60px; /* Adjust initial width */
   /* height: 100vh; */
