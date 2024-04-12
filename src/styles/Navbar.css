@@ -126,3 +126,23 @@ a:hover {
   color: #809fe3;
 }
 
+.dropdown {
+  margin-top: 10px; /* Adjust this value as needed to lower the dropdown */
+  background-color: #333; /* Adjust to match the navbar if needed */
+  /* Other styling properties for dropdown */
+}
+
+/* You might also want to style the <li> inside .dropdown to match the design */
+.dropdown li {
+  padding: 8px 10px;
+  color: white; /* or any other color you prefer */
+}
+
+/* Add styles for when hovering over dropdown items */
+.dropdown li:hover {
+  background-color: #444; /* Slightly lighter than the navbar background */
+  cursor: pointer;
+}
+
+/* ... any other styles ... */
+
