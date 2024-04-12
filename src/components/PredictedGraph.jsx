@@ -49,7 +49,7 @@ const PredictedGraph = () => {
   };
 
   return (
-    <div className="predictedGraphContainer">
+    <div style={{ height: '100%', width: '100%' }}>
       <h2>Predicted Maintenance Hotspots</h2>
       <Line data={data} options={options} />
     </div>

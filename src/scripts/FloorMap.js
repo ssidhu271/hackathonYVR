@@ -261,17 +261,17 @@ const VancouverAirportMap = () => {
 
 
       {/* CHARTS AND GRAPHS START */}
-      <div className="chartsWrapper">
-  <div className="chartContainer">
+      <div className="chartsWrapper" style={{objectFit:'contain', height: 40 + '%', width: 100 + '%'}}>
+  <div className="chartContainer" style={{height: 17 + 'vw', width: 20 + 'vw'}}>
     <IssueTypesPieChart issueData={issueData} />
   </div>
-  <div className="barChartContainer">
+  <div className="barChartContainer" style={{height: 17 + 'vw', width: 20 + 'vw'}}>
     <BarChart markers={markers} />
   </div>
-  <div className="predictedGraphContainer">
+  <div className="predictedGraphContainer" style={{height: 17 + 'vw', width: 20 + 'vw'}}>
     <PredictedGraph />
   </div>
-  <div className="activityTypeContainer">
+  <div className="activityTypeContainer" style={{height: 17 + 'vw', width: 20 + 'vw'}}>
     <ActivityTypeChart />
   </div>
 </div>
