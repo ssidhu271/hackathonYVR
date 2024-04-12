@@ -34,8 +34,7 @@ def send_notification():
         message_type = data.get("message_type")
 
         subject = f"Alert: {message_type}"
-        message = f"An event of type '{message_type}' requires attention at location: {location}."
-        response_message = email_notifier.send_email(staff, subject, message, location, staff_email)
+        response_message = email_notifier.send_email(staff, subject, message_type, location, staff_email)
         return jsonify({'message': response_message}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500

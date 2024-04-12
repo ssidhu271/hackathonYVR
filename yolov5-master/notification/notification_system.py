@@ -16,18 +16,18 @@ class NotificationManager:
     def send_email(self, name, subject, message_type, location, recipient):
         try:
             subject_preface = ['DO NOT RESPOND: ', subject]
-            message_body = [
-                f"""Hello {name},
-                There is {message_type} at {location}.\n
-                Please assess the area
-                """
-            ]
+            message_body = (
+                f"Hello {name},\n\n"
+                f"There is {message_type} at {location}.\n"
+                "Please assess the area.\n\n"
+                "Thank you."
+            )
 
             email_msg = MIMEMultipart()
             email_msg['From'] = self.email_host_user
             email_msg['To'] = recipient
             email_msg['Subject'] = ''.join(subject_preface)
-            email_msg.attach(MIMEText(''.join(message_body), 'plain'))
+            email_msg.attach(MIMEText(message_body, 'plain'))
 
             server = smtplib.SMTP(self.email_host, self.email_port)
             if self.email_use_tls:

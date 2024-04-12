@@ -20,7 +20,7 @@ const Navbar = () => {
   const handleSelection = async (location) => {
     const staffName = "Harrison d";
     const staffEmail = "harrisondijon@gmail.com";
-    const messageType = "Maintenance Required";
+    const messageType = "Maintenance (Broken Door)";
 
     try {
       const apiService = new APIService();
