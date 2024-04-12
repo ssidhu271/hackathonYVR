@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Pie } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
 import "../styles/PieChart.css";
 import APIService from '../services/APIservice.js'
@@ -34,9 +35,9 @@ const IssueTypesPieChart = () => {
     datasets: [{
       data: issueData.values,
       backgroundColor: [
-        'rgba(255, 99, 132, 0.6)',
-        'rgba(54, 162, 235, 0.6)',
-        'rgba(255, 206, 86, 0.6)',
+        'rgba(255, 99, 132, 0.8)',
+        'rgba(54, 162, 235, 0.8)',
+        'rgba(255, 206, 86, 0.8)',
       ],
       borderColor: [
         'rgba(255, 99, 132, 1)',
@@ -44,7 +45,8 @@ const IssueTypesPieChart = () => {
         'rgba(255, 206, 86, 1)',
       ],
       borderWidth: 1,
-    }],
+      cutout: '50%',
+    }]
   };
 
   const options = {
@@ -52,10 +54,11 @@ const IssueTypesPieChart = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
+        position: 'bottom',
         labels: {
-          color: '#fff',
+          color: '#fff', 
           font: {
-            size: 14,
+            size: 14, 
           },
         },
       },
