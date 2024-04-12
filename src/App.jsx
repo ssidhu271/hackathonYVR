@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import FloorMap from "./scripts/FloorMap";
 import GraphPage from "./pages/GraphPage"; // Adjust the import path as necessary
 
+
 function App() {
   return (
     <Router>
