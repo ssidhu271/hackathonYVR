@@ -64,6 +64,7 @@ import BarChart from '../components/BarChart';
 import PredictedGraph from '../components/PredictedGraph';
 import ActivityTypeChart from "../components/ActivityTypeChart";
 import axios from 'axios';
+import useSendLuggageData from '../Database/sendLuggageData';
 
 
 const fetchBathroomLocations = async () => {
@@ -159,6 +160,7 @@ const VancouverAirportMap = () => {
   });
 
   const overcrowdingThreshold = 200;
+  const sendLuggageData = useSendLuggageData();
 
 
   const addMarker = useCallback((newMarker, duration = 5000) => {
@@ -211,8 +213,15 @@ const VancouverAirportMap = () => {
       addMarker(newMarker, 10000);
     }, 15000);
 
-    return () => clearInterval(intervalId);
-  }, [addMarker]);
+    const luggageIntervalId = setInterval(() => {
+      sendLuggageData();
+    }, 15000);
+
+    return () => {
+      clearInterval(intervalId);
+      clearInterval(luggageIntervalId);
+    };
+  }, [addMarker, sendLuggageData]);
 
   const totalPeople = markers.reduce(
     (acc, marker) => acc + marker.peopleCount,

@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import moment from 'moment';
 
 ChartJS.register(
   CategoryScale,
@@ -23,7 +24,8 @@ ChartJS.register(
 );
 
 const GraphPage = () => {
-  const [data, setData] = useState([]);
+  const [peopleData, setPeopleData] = useState([]);
+  const [luggageData, setLuggageData] = useState([]);
 
   const graphContainerStyle = {
     marginLeft: '250px',
@@ -41,10 +43,10 @@ const GraphPage = () => {
     scales: {
       x: {
         ticks: {
-          color: '#ffffff', 
+          color: '#ffffff',
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)', 
+          color: 'rgba(255, 255, 255, 0.1)',
         },
       },
       y: {
@@ -76,30 +78,44 @@ const GraphPage = () => {
   
 
   const fetchData = async () => {
-    const response = await axios.get('http://localhost:3001/counts');
-    setData(response.data);
+    try {
+      const [peopleResponse, luggageResponse] = await Promise.all([
+        axios.get('http://localhost:3001/people-counts'),
+        axios.get('http://localhost:3001/luggage-counts')
+      ]);
+      setPeopleData(peopleResponse.data);
+      setLuggageData(luggageResponse.data);
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
   };
 
   useEffect(() => {
     fetchData();
-    const intervalId = setInterval(fetchData, 15 * 60 * 1000); 
+    const intervalId = setInterval(fetchData, 1000); 
 
     return () => clearInterval(intervalId); 
   }, []);
 
   const chartData = {
-    labels: data.map((item) => new Date(item.timestamp).toLocaleString()),
+    labels: peopleData.map(item => moment(item.rounded_timestamp).format('YYYY-MM-DD HH:mm')),
     datasets: [
       {
         label: 'People Count',
-        data: data.map((item) => item.peopleCount),
+        data: peopleData.map(item => item.avgPeopleCount),
+        borderColor: '#4BC0C0',
+        backgroundColor: '#4BC0C0',
         fill: false,
-        backgroundColor: '#ffffff', 
-        borderColor: '#4BC0C0', 
-        pointBackgroundColor: '#ffffff', 
-        pointBorderColor: '#4BC0C0', 
-        borderWidth: 2, 
+        borderWidth: 2,
       },
+      {
+        label: 'Luggage Count',
+        data: luggageData.map(item => item.avgLuggageCount),
+        borderColor: '#ff0000',
+        backgroundColor: '#ff0000',
+        fill: false,
+        borderWidth: 2,
+      }
     ],
   };
   
